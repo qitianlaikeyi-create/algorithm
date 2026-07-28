@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	int t;cin>>t;
+	while(t--){
+	vector<vector<int> >a(1005);
+	priority_queue<int,vector<int>,greater<int> > pq;
+	vector<int>pre(1005,0); 
+	int n,m;cin>>n>>m;
+	for(int i=1;i<=m;i++){
+		int u,v;
+		cin>>u>>v;
+		a[u].push_back(v);
+		pre[v]++;
+	}
+	for(int i=1;i<=n;i++){
+		if(pre[i]==0)pq.push(i);
+	}
+	vector<int>ans;
+	while(!pq.empty()){
+		int x=pq.top();
+		pq.pop();
+		ans.push_back(x);
+	for(auto j:a[x]){
+		pre[j]--;
+		if(pre[j]<=0)pq.push(j);
+	} 
+	}
+	if(ans.size()==n){
+		cout<<"Yes"<<endl;
+		for(int i=0;i<ans.size();i++){
+			cout<<ans[i]<<" ";
+		}
+		cout<<endl; 
+	}
+	else cout<<"No"<<endl;
+}
+	return 0;
+
+} 
