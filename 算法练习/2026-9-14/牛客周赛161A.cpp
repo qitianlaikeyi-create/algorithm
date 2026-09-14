@@ -1,6 +1,6 @@
 //https://ac.nowcoder.com/acm/contest/140235/A
 
-include<bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 #define ll long long
 
