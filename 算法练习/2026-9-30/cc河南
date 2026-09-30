@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+int a[1005][1005];
+bool vis[1005][1005];
+bool vis2[1005][1005];
+int n,m;
+void dfs(int x,int y){
+    vis[x][y]=1;
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,-1,1};
+    for(int i=0;i<4;i++){
+        int nx=x+dx[i];
+        int ny=y+dy[i];
+        if(nx<1||nx>n||ny<1||ny>m){
+            continue ;
+        }
+        if(a[nx][ny]==1&&!vis[nx][ny]){
+            dfs(nx,ny);
+        }
+    }
+}
+bool dfs0(int x,int y){
+    vis2[x][y]=1;
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,-1,1};
+    bool touch=0;
+    if(x==1||x==n||y==1||y==m){
+        touch=1;
+    }
+    for(int i=0;i<4;i++){
+        int nx=x+dx[i];
+        int ny=y+dy[i];
+        if(nx<1||nx>n||ny<1||ny>m){
+            continue ;
+        }
+        if(a[nx][ny]==0&&!vis2[nx][ny]){
+            if(dfs0(nx,ny)){
+                touch=1;
+            }
+        }
+    }
+    return touch;
+}
+int main(){
+   cin>>n>>m;
+   bool ans=0;
+   int c4=0;
+   int c0=0;
+   memset(vis,0,sizeof(vis));
+   memset(vis2,0,sizeof(vis2));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cin>>a[i][j];
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(a[i][j]==1&&!vis[i][j]){
+                c4++;
+                dfs(i,j);
+            }
+        }
+    }
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(a[i][j]==0&&!vis2[i][j]){
+              ans=dfs0(i,j);
+              if(!ans)c0++;
+            }
+        }
+    }
+    if(c0==2&&c4==1){
+        cout<<"This is eight.";
+    }
+    else cout<<"I don't know what this number is.";
+    return 0;
+}
