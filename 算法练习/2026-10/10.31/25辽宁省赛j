@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main() {
+    int n,m;cin>>n>>m;
+    vector<vector<ll>>num(n+1);
+    for(int i=1;i<=m;i++){
+        int x;cin>>x;
+        if(x==1){
+           int i;ll s;
+           cin>>i>>s;
+           num[i].push_back(s);
+        }
+        if(x==2){
+            int i1,j1,i2,j2;cin>>i1>>j1>>i2>>j2;
+            int n1=num[i1][j1-1];
+            int n2=num[i2][j2-1];
+            num[i1][j1-1]=n2;
+            num[i2][j2-1]=n1;
+        }
+    }
+    for(int i=1;i<=n;i++){
+        int si=num[i].size();
+        if(si){
+            cout<<si<<" ";
+            for(auto x:num[i]){
+                cout<<x<<"      ";
+            }
+            cout<<endl;
+        }
+        else {cout<<si<<endl;}
+    }
+    return 0;
+}
+
+
