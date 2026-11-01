@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int get_max(int x){
+    int cur=0;
+    while(x){
+        int num=x%10;
+        cur=max(cur,num);
+        x/=10;
+    }
+    return cur;
+}
+ll check(vector<int>&a,int c,int limit){
+    int sum=0;
+    ll ans=0;
+    vector<int>cnt(c,0);
+    cnt[0]=1;
+    for(auto x:a){
+        if(get_max(x)>limit){
+            for(int i=0;i<c;i++){
+                cnt[i]=0;
+            }
+            sum=0;
+            cnt[0]=1;
+            continue;
+        }
+         sum=(sum+x)%c;
+        ans+=cnt[sum];
+        cnt[sum]++;
+    }
+    return ans;
+} 
+int main(){
+    int t;cin>>t;
+    while(t--){
+        int n;cin>>n;
+        ll ans=0;
+        vector<int>a(n);
+        for(int i=0;i<n;i++){
+            cin>>a[i];
+        }
+        for(int i=1;i<=9;i++){
+            ans+=check(a,i,i)-check(a,i,i-1);
+        }
+        cout<<ans<<endl;
+    }    
+    return 0;
+}
